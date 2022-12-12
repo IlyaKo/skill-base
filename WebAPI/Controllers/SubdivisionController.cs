@@ -1,26 +1,34 @@
-﻿using Database.Repositories.Subdivisions;
-using Domain;
+﻿using Application.Subdivisions.Create;
+using Application.Subdivisions.GetById;
+using Application.Subdivisions.Model;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers;
+
 [Route("api/subdivisions")]
 [ApiController]
 public class SubdivisionController : ControllerBase
 {
-    private readonly ISubdivisionRepository repository;
+    private readonly IMediator mediator;
 
-    public SubdivisionController(ISubdivisionRepository repository)
+    public SubdivisionController(IMediator mediator)
     {
-        this.repository = repository;
+        this.mediator = mediator;
     }
 
-    [HttpGet]
-    public async Task<ICollection<Subdivision>> GetAll()
-        => await repository.GetAll();
-
     [HttpGet("{id}")]
-    public async Task<Subdivision> GetById(int id)
-        => await repository.GetById(id);
+    public async Task<SubdivisionViewModel> GetById(int id)
+    {
+        var command = new GetSubdivisionByIdRequest { Id = id };
+        return await mediator.Send(command);
+    }
+
+    [HttpPost]
+    public async Task<int> Create(CreateSubdivisionDto dto)
+    {
+        var command = new CreateSubdivisionRequest { Subdivision = dto };
+        return await mediator.Send(command);
+    }
 }
