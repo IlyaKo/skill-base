@@ -1,6 +1,6 @@
 ﻿namespace Application.Subdivisions.Model;
 
-public record CreateSubdivisionDto
+public record EditSubdivisionDto
 {
     public string Name { get; set; }
 }

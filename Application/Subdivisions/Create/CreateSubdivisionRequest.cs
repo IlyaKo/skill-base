@@ -5,5 +5,5 @@ namespace Application.Subdivisions.Create;
 
 public record CreateSubdivisionRequest : IRequest<int>
 {
-    public CreateSubdivisionDto Subdivision { get; set; }
+    public EditSubdivisionDto Subdivision { get; set; }
 }

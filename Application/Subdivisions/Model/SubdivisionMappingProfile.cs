@@ -7,7 +7,7 @@ public sealed class SubdivisionMappingProfile : Profile
 {
     public SubdivisionMappingProfile()
     {
-        CreateMap<CreateSubdivisionDto, Subdivision>()
+        CreateMap<EditSubdivisionDto, Subdivision>()
             .ForMember(dest => dest.Id, opt => opt.Ignore());
 
         CreateMap<Subdivision, SubdivisionViewModel>();
