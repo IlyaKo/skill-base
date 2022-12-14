@@ -1,4 +1,5 @@
-﻿using Database.Repositories.SkillAreas;
+﻿using Database.Repositories.KnowledgeLevels;
+using Database.Repositories.SkillAreas;
 using Database.Repositories.Skills;
 using Database.Repositories.Subdivisions;
 using Database.Repositories.Surveys;
@@ -19,6 +20,7 @@ public class AppContext : DbContext
         builder.ApplyConfiguration(new SubdivisionConfiguration());
         builder.ApplyConfiguration(new SkillAreaConfiguration());
         builder.ApplyConfiguration(new SurveyConfiguration());
-        builder.ApplyConfiguration(new UserConfiguration());       
+        builder.ApplyConfiguration(new UserConfiguration());    
+        builder.ApplyConfiguration(new KnowledgeLevelConfiguration());
     }
 }

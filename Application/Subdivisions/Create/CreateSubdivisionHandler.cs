@@ -20,7 +20,7 @@ public sealed class CreateSubdivisionHandler : IRequestHandler<CreateSubdivision
 
     public async Task<int> Handle(CreateSubdivisionRequest request, CancellationToken cancellationToken)
     {
-        var entity = mapper.Map<Subdivision>(request.Subdivision);
+        var entity = mapper.Map<Subdivision>(request.Dto);
         await repository.Create(entity);
 
         return entity.Id;

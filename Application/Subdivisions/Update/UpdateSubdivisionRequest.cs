@@ -6,5 +6,5 @@ namespace Application.Subdivisions.Update;
 public record UpdateSubdivisionRequest : IRequest<Unit>
 {
     public int Id { get; set; }
-    public EditSubdivisionDto Subdivision { get; set; }
+    public EditSubdivisionDto Dto { get; set; }
 }

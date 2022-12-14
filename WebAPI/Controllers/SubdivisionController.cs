@@ -39,14 +39,14 @@ public class SubdivisionController : ControllerBase
     [HttpPost]
     public async Task<int> Create(EditSubdivisionDto dto)
     {
-        var command = new CreateSubdivisionRequest { Subdivision = dto };
+        var command = new CreateSubdivisionRequest { Dto = dto };
         return await mediator.Send(command);
     }
 
     [HttpPut("{id}")]
     public async Task Update(int id, EditSubdivisionDto dto)
     {
-        var command = new UpdateSubdivisionRequest { Id = id, Subdivision = dto };
+        var command = new UpdateSubdivisionRequest { Id = id, Dto = dto };
         await mediator.Send(command);
     }
 

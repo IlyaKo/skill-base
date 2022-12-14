@@ -1,24 +1,24 @@
 ﻿using AutoMapper;
-using Database.Repositories.Subdivisions;
+using Database.Repositories.KnowledgeLevels;
 using MediatR;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Subdivisions.Update;
+namespace Application.KnowledgeLevels.Update;
 
-public sealed class UpdateSubdivisionHandler : IRequestHandler<UpdateSubdivisionRequest, Unit>
+public sealed class UpdateKnowledgeLevelHandler : IRequestHandler<UpdateKnowledgeLevelRequest, Unit>
 {
-    private readonly ISubdivisionRepository repository;
+    private readonly IKnowledgeLevelRepository repository;
     private readonly IMapper mapper;
 
-    public UpdateSubdivisionHandler(ISubdivisionRepository repository, IMapper mapper)
+    public UpdateKnowledgeLevelHandler(IKnowledgeLevelRepository repository, IMapper mapper)
     {
         this.repository = repository;
         this.mapper = mapper;
     }
 
-    public async Task<Unit> Handle(UpdateSubdivisionRequest request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(UpdateKnowledgeLevelRequest request, CancellationToken cancellationToken)
     {
         var entity = await repository.GetById(request.Id);
         if (entity == null)
