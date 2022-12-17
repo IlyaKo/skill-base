@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Database.Repositories.Surveys;
+
 public interface ISurveyRepository
 {
     Task<Survey> Create(Survey survey);

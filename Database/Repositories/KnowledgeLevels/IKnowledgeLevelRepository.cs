@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Database.Repositories.KnowledgeLevels;
+
 public interface IKnowledgeLevelRepository
 {
     Task<KnowledgeLevel> Create(KnowledgeLevel level);

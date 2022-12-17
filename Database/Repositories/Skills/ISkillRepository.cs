@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Database.Repositories.Skills;
-internal interface ISkillRepository
+
+public interface ISkillRepository
 {
     Task<Skill> Create(Skill skill);
     Task Delete(int id);

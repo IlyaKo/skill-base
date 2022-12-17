@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Database.Repositories.Subdivisions;
+
 public interface ISubdivisionRepository
 {
     Task<Subdivision> Create(Subdivision subdivision);

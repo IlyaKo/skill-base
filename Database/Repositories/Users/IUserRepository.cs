@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Database.Repositories.Users;
+
 public interface IUserRepository
 {
     Task<User> Create(User user);

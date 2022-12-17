@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Database.Repositories.SkillAreas;
+
 public interface ISkillAreaRepository
 {
     Task<SkillArea> Create(SkillArea skillArea);

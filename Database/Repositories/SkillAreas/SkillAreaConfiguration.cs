@@ -16,5 +16,12 @@ internal class SkillAreaConfiguration : IEntityTypeConfiguration<SkillArea>
             .HasMany(x => x.Skills)
             .WithOne(y => y.Area)
             .HasForeignKey(y => y.SkillAreaId);
+
+        builder
+            .HasData(
+                new[]
+                {
+                    new SkillArea { Id = 1, Name = "Common", Order = 1 }
+                });
     }
 }
