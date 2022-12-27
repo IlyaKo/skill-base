@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,14 +18,14 @@ public class SkillAreaRepository : RepositoryBase<SkillArea>, ISkillAreaReposito
         => await base.UpdateAsync(skillArea);
 
     public async Task<List<SkillArea>> GetAll()
-        => await base.GetAllAsync();
+        => await base.GetAllAsync().ToListAsync();
 
-    public async Task<SkillArea> GetById(int id)
-        => await base.FindByIdAsync(id);
+    public async Task<SkillArea> GetById(int id, bool asNoTracking = true)
+        => await base.FindById(id, asNoTracking).FirstOrDefaultAsync();
 
     public async Task Delete(int id)
     {
-        var skillArea = await base.FindByIdAsync(id);
+        var skillArea = await base.FindById(id).FirstOrDefaultAsync();
         if (skillArea != null)
         {
             await base.DeleteAsync(skillArea);

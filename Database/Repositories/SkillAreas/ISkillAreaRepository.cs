@@ -9,6 +9,6 @@ public interface ISkillAreaRepository
     Task<SkillArea> Create(SkillArea skillArea);
     Task Delete(int id);
     Task<List<SkillArea>> GetAll();
-    Task<SkillArea> GetById(int id);
+    Task<SkillArea> GetById(int id, bool asNoTracking = true);
     Task Update(SkillArea skillArea);
 }

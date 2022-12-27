@@ -9,7 +9,8 @@ public interface ISubdivisionRepository
     Task<Subdivision> Create(Subdivision subdivision);
     Task Delete(int id);
     Task<List<Subdivision>> GetAll();
-    Task<List<SkillArea>> GetByAreasBySubdivisionId(int id);
+    Task<List<SkillArea>> GetAreasBySubdivisionId(int id);
     Task<Subdivision> GetById(int id);
     Task Update(Subdivision subdivision);
+    Task Save();
 }

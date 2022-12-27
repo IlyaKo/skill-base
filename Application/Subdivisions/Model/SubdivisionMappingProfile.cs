@@ -10,6 +10,7 @@ public sealed class SubdivisionMappingProfile : Profile
         CreateMap<EditSubdivisionDto, Subdivision>()
             .ForMember(dest => dest.Id, opt => opt.Ignore());
 
-        CreateMap<Subdivision, SubdivisionViewModel>();
+        CreateMap<Subdivision, SubdivisionViewModel>()
+            .ForMember(dest => dest.SkillAreas, opt => opt.MapFrom(src => src.Areas));
     }
 }

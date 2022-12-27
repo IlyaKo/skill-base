@@ -20,20 +20,23 @@ public class SubdivisionRepository : RepositoryBase<Subdivision>, ISubdivisionRe
         => await base.UpdateAsync(subdivision);
 
     public async Task<List<Subdivision>> GetAll()
-        => await base.GetAllAsync();
+        => await base.GetAllAsync().Include(x => x.Areas).ToListAsync();
 
-    public async Task<List<SkillArea>> GetByAreasBySubdivisionId(int id)
-        => await _set.Where(x => x.Id == id).AsNoTracking().SelectMany(x => x.Areas).ToListAsync();
+    public async Task<List<SkillArea>> GetAreasBySubdivisionId(int id)
+        => await base.FindById(id).SelectMany(x => x.Areas).ToListAsync();
 
     public async Task<Subdivision> GetById(int id)
-        => await base.FindByIdAsync(id);
+        => await base.FindById(id).Include(x => x.Areas).FirstOrDefaultAsync();
 
     public async Task Delete(int id)
     {
-        var subdivision = await base.FindByIdAsync(id);
+        var subdivision = await base.FindById(id).FirstOrDefaultAsync();
         if (subdivision != null)
         {
             await base.DeleteAsync(subdivision);
         }
     }
+
+    public Task Save()
+        => base.SaveAsync();    
 }

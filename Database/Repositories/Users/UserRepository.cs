@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -18,14 +19,14 @@ public class UserRepository : RepositoryBase<User>, IUserRepository
         => await base.UpdateAsync(user);
 
     public async Task<List<User>> GetAll()
-        => await base.GetAllAsync();
+        => await base.GetAllAsync().ToListAsync();
 
     public async Task<User> GetById(int id)
-        => await base.FindByIdAsync(id);
+        => await base.FindById(id).FirstOrDefaultAsync();
 
     public async Task Delete(int id)
     {
-        var user = await base.FindByIdAsync(id);
+        var user = await base.FindById(id).FirstOrDefaultAsync();
         if (user != null)
         {
             await base.DeleteAsync(user);

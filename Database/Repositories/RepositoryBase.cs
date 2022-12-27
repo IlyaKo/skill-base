@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Database.Repositories;
 
-public class RepositoryBase<TEntity> where TEntity : EntityBase
+public abstract class RepositoryBase<TEntity> where TEntity : EntityBase
 {
     protected readonly DbContext _context;
     protected readonly DbSet<TEntity> _set;
@@ -32,19 +32,24 @@ public class RepositoryBase<TEntity> where TEntity : EntityBase
         return SaveAsync();
     }
 
-    protected virtual Task<TEntity> FindByIdAsync(int id, params string[] includePaths)
+    protected virtual IQueryable<TEntity> FindById(int id, bool asNoTracking = true, params string[] includePaths)
     {
-        var entities = _set.AsQueryable().AsNoTracking();
+        var entities = _set.AsQueryable();
+
+        if (asNoTracking)
+        {
+            entities = entities.AsNoTracking();
+        }
 
         if (includePaths.Length > 0)
         {
             entities = AddIncludes(entities, includePaths);
         }
 
-        return entities.FirstOrDefaultAsync(x => x.Id == id);
+        return entities.Where(x => x.Id == id);
     }
 
-    protected virtual Task<List<TEntity>> GetAllAsync(string[] includePaths = null)
+    protected virtual IQueryable<TEntity> GetAllAsync(string[] includePaths = null)
     {
         var entities = _set.AsQueryable().AsNoTracking();
 
@@ -53,7 +58,7 @@ public class RepositoryBase<TEntity> where TEntity : EntityBase
             entities = AddIncludes(entities, includePaths);
         }
 
-        return entities.ToListAsync();
+        return entities;
     }
 
     protected Task SaveAsync()
