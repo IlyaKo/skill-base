@@ -20,7 +20,7 @@ public sealed class UpdateSubdivisionHandler : IRequestHandler<UpdateSubdivision
 
     public async Task<Unit> Handle(UpdateSubdivisionRequest request, CancellationToken cancellationToken)
     {
-        var entity = await subdivisionRepository.GetById(request.Id, asNoTracking: false);
+        var entity = await subdivisionRepository.GetById(request.Id, tracking: true);
         if (entity == null)
         {
             throw new ArgumentException($"Can't find entity with Id = {request.Id}");

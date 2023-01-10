@@ -10,7 +10,7 @@ public interface ISubdivisionRepository
     Task Delete(int id);
     Task<List<Subdivision>> GetAll();
     Task<List<SkillArea>> GetAreasBySubdivisionId(int id);
-    Task<Subdivision> GetById(int id, bool asNoTracking = true);
+    Task<Subdivision> GetById(int id, bool tracking = false);
     Task Update(Subdivision subdivision, int[] skillAreaIds);
     Task Save();
 }

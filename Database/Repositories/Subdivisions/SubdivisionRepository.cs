@@ -55,8 +55,8 @@ public class SubdivisionRepository : RepositoryBase<Subdivision>, ISubdivisionRe
     public async Task<List<SkillArea>> GetAreasBySubdivisionId(int id)
         => await base.FindById(id).SelectMany(x => x.Areas).ToListAsync();
 
-    public async Task<Subdivision> GetById(int id, bool asNoTracking = true)
-        => await base.FindById(id, asNoTracking).Include(x => x.Areas).FirstOrDefaultAsync();
+    public async Task<Subdivision> GetById(int id, bool tracking = false)
+        => await base.FindById(id, tracking).Include(x => x.Areas).FirstOrDefaultAsync();
 
     public async Task Delete(int id)
     {

@@ -22,10 +22,10 @@ public class SkillAreaRepository : RepositoryBase<SkillArea>, ISkillAreaReposito
     public async Task<List<SkillArea>> GetAll()
         => await base.GetAllAsync().ToListAsync();
 
-    public async Task<SkillArea> GetById(int id, bool asNoTracking = true)
-        => await base.FindById(id, asNoTracking).FirstOrDefaultAsync();
+    public async Task<SkillArea> GetById(int id, bool tracking = false)
+        => await base.FindById(id, tracking).FirstOrDefaultAsync();
 
-    public async Task<List<SkillArea>> GetByIds(List<int> ids, bool asNoTracking = true)
+    public async Task<List<SkillArea>> GetByIds(List<int> ids, bool tracking = false)
     {
         if (ids.Count == 0)
         {
@@ -33,7 +33,7 @@ public class SkillAreaRepository : RepositoryBase<SkillArea>, ISkillAreaReposito
         }
 
         var skillAreasIds = ids.Distinct().ToList();
-        var skillAreas = await base.FindByIds(skillAreasIds, asNoTracking).ToListAsync();
+        var skillAreas = await base.FindByIds(skillAreasIds, tracking).ToListAsync();
         if (skillAreas.Count < skillAreasIds.Count)
         {
             var wrongIds = skillAreasIds.Except(skillAreas.Select(x => x.Id)).ToList();

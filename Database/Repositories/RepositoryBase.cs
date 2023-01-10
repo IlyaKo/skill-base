@@ -35,11 +35,11 @@ public abstract class RepositoryBase<TEntity> where TEntity : EntityBase
         return SaveAsync();
     }
 
-    protected virtual IQueryable<TEntity> FindById(int id, bool asNoTracking = true)
+    protected virtual IQueryable<TEntity> FindById(int id, bool tracking = false)
     {
         var entities = _set.AsQueryable();
 
-        if (asNoTracking)
+        if (!tracking)
         {
             entities = entities.AsNoTracking();
         }
@@ -47,11 +47,11 @@ public abstract class RepositoryBase<TEntity> where TEntity : EntityBase
         return entities.Where(x => x.Id == id);
     }
 
-    protected virtual IQueryable<TEntity> FindByIds(List<int> ids, bool asNoTracking = true)
+    protected virtual IQueryable<TEntity> FindByIds(List<int> ids, bool tracking = false)
     {
         var entities = _set.AsQueryable();
 
-        if (asNoTracking)
+        if (!tracking)
         {
             entities = entities.AsNoTracking();
         }
@@ -59,10 +59,10 @@ public abstract class RepositoryBase<TEntity> where TEntity : EntityBase
         return entities.Where(x => ids.Contains(x.Id));
     }
 
-    protected virtual IQueryable<TEntity> GetAllAsync(bool asNoTracking = true)
+    protected virtual IQueryable<TEntity> GetAllAsync(bool tracking = false)
     {
         var query = _set.AsQueryable();
-        if (asNoTracking)
+        if (!tracking)
         {
             query = query.AsNoTracking();
         }
