@@ -14,7 +14,7 @@ internal class SubdivisionConfiguration : IEntityTypeConfiguration<Subdivision>
 
         builder
             .HasMany(x => x.Areas)
-            .WithMany()
+            .WithMany(y => y.Subdivisions)
             .UsingEntity(j => j.ToTable("SubdivisionAreas"));
 
         builder

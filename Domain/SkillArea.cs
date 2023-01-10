@@ -8,4 +8,6 @@ public class SkillArea : EntityBase
     public int Order { get; set; }
 
     public ICollection<Skill> Skills { get; set; }
+
+    public ICollection<Subdivision> Subdivisions { get; set; }
 }

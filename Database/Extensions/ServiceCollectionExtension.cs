@@ -15,7 +15,11 @@ public static class ServiceCollectionExtension
     public static IServiceCollection AddDbRepositories(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("AppDb");
-        services.AddDbContext<AppContext>(builder => builder.UseNpgsql(connectionString), contextLifetime: ServiceLifetime.Transient);
+        services.AddDbContext<AppContext>(builder => 
+            builder
+                .UseNpgsql(connectionString)
+                .EnableSensitiveDataLogging(), 
+            contextLifetime: ServiceLifetime.Transient);
 
         services.AddTransient<IKnowledgeLevelRepository, KnowledgeLevelRepository>();
         services.AddTransient<ISkillRepository, SkillRepository>();

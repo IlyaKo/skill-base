@@ -17,10 +17,13 @@ public abstract class RepositoryBase<TEntity> where TEntity : EntityBase
         _set = context.Set<TEntity>();
     }
 
-    protected virtual async Task<TEntity> AddAsync(TEntity entity)
+    protected virtual async Task<TEntity> AddAsync(TEntity entity, bool saveChanges = true)
     {
         var entry = await _set.AddAsync(entity);
-        await _context.SaveChangesAsync();
+        if (saveChanges)
+        {
+            await _context.SaveChangesAsync();
+        }
 
         return entry.Entity;
     }
@@ -32,7 +35,7 @@ public abstract class RepositoryBase<TEntity> where TEntity : EntityBase
         return SaveAsync();
     }
 
-    protected virtual IQueryable<TEntity> FindById(int id, bool asNoTracking = true, params string[] includePaths)
+    protected virtual IQueryable<TEntity> FindById(int id, bool asNoTracking = true)
     {
         var entities = _set.AsQueryable();
 
@@ -41,40 +44,42 @@ public abstract class RepositoryBase<TEntity> where TEntity : EntityBase
             entities = entities.AsNoTracking();
         }
 
-        if (includePaths.Length > 0)
-        {
-            entities = AddIncludes(entities, includePaths);
-        }
-
         return entities.Where(x => x.Id == id);
     }
 
-    protected virtual IQueryable<TEntity> GetAllAsync(string[] includePaths = null)
+    protected virtual IQueryable<TEntity> FindByIds(List<int> ids, bool asNoTracking = true)
     {
-        var entities = _set.AsQueryable().AsNoTracking();
+        var entities = _set.AsQueryable();
 
-        if (includePaths?.Any() == true)
+        if (asNoTracking)
         {
-            entities = AddIncludes(entities, includePaths);
+            entities = entities.AsNoTracking();
         }
 
-        return entities;
+        return entities.Where(x => ids.Contains(x.Id));
+    }
+
+    protected virtual IQueryable<TEntity> GetAllAsync(bool asNoTracking = true)
+    {
+        var query = _set.AsQueryable();
+        if (asNoTracking)
+        {
+            query = query.AsNoTracking();
+        }
+
+        return query;
     }
 
     protected Task SaveAsync()
-    {
-        return _context.SaveChangesAsync();
-    }
+        => _context.SaveChangesAsync();
 
-    protected virtual Task UpdateAsync(TEntity entity)
+    protected async virtual Task UpdateAsync(TEntity entity, bool saveChanges = true)
     {
         _set.Update(entity);
-
-        return SaveAsync();
+        if (saveChanges)
+        {
+            await SaveAsync();
+        }
     }
 
-    protected virtual IQueryable<TEntity> AddIncludes(IQueryable<TEntity> entities, IEnumerable<string> includePaths)
-    {
-        return includePaths.Aggregate(entities, (current, includePath) => current.Include(includePath));
-    }
 }
